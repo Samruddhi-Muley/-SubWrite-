@@ -1,0 +1,27 @@
+# Environment variables (IMPORTANT - keeps passwords safe!)
+.env
+
+# Python virtual environment
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Database (optional - uncomment if you don't want to commit DB)
+# *.db
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

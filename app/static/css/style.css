@@ -1,0 +1,259 @@
+/* Custom styles for SubWrite */
+
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Markdown Content Styling */
+.markdown-content {
+    color: #374151;
+    line-height: 1.75;
+}
+
+/* Fix: Different sizes for H1 and H2 */
+.markdown-content h1 {
+    font-size: 2.5rem;           /* Larger H1 */
+    font-weight: 800;            /* Bolder */
+    margin-top: 2rem;
+    margin-bottom: 1.25rem;
+    color: #111827;
+    border-bottom: 2px solid #e5e7eb;  /* Underline H1 */
+    padding-bottom: 0.5rem;
+}
+
+.markdown-content h2 {
+    font-size: 2rem;             /* Smaller than H1 */
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: #1f2937;
+}
+
+.markdown-content h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: #374151;
+}
+
+.markdown-content h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: #4b5563;
+}
+
+.markdown-content p {
+    margin-bottom: 1.25rem;
+    color: #374151;
+    font-size: 1.125rem;
+}
+
+/* Fix: Link styling - make them visible */
+.markdown-content a {
+    color: #4f46e5;              /* Indigo color */
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+.markdown-content a:hover {
+    color: #4338ca;              /* Darker on hover */
+    text-decoration: none;
+}
+
+/* Fix: Lists with bullets/numbers */
+.markdown-content ul {
+    list-style-type: disc;       /* Show bullets */
+    margin-left: 2rem;           /* Indent */
+    margin-bottom: 1.25rem;
+    padding-left: 0;
+}
+
+.markdown-content ol {
+    list-style-type: decimal;    /* Show numbers */
+    margin-left: 2rem;           /* Indent */
+    margin-bottom: 1.25rem;
+    padding-left: 0;
+}
+
+.markdown-content li {
+    margin-bottom: 0.5rem;
+    padding-left: 0.5rem;
+    color: #374151;
+}
+
+.markdown-content ul ul,
+.markdown-content ol ol {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.markdown-content blockquote {
+    border-left: 4px solid #4f46e5;
+    padding-left: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-left: 0;
+    margin-bottom: 1.25rem;
+    background-color: #f9fafb;
+    color: #4b5563;
+    font-style: italic;
+}
+
+.markdown-content code {
+    background-color: #f3f4f6;
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    font-family: 'Courier New', Consolas, Monaco, monospace;
+    color: #dc2626;
+}
+
+.markdown-content pre {
+    background-color: #1f2937;
+    color: #f9fafb;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin-bottom: 1.25rem;
+    font-size: 0.875rem;
+}
+
+.markdown-content pre code {
+    background-color: transparent;
+    padding: 0;
+    color: #f9fafb;
+    font-size: 0.875rem;
+}
+
+.markdown-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    margin: 1.5rem 0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.markdown-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.25rem;
+    font-size: 0.95rem;
+}
+
+.markdown-content table th,
+.markdown-content table td {
+    border: 1px solid #e5e7eb;
+    padding: 0.75rem;
+    text-align: left;
+}
+
+.markdown-content table th {
+    background-color: #f9fafb;
+    font-weight: 600;
+    color: #111827;
+}
+
+.markdown-content table tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+.markdown-content hr {
+    border: 0;
+    border-top: 2px solid #e5e7eb;
+    margin: 2.5rem 0;
+}
+
+.markdown-content strong {
+    font-weight: 700;
+    color: #111827;
+}
+
+.markdown-content em {
+    font-style: italic;
+    color: #4b5563;
+}
+
+/* Prose base styles */
+.prose {
+    color: #374151;
+    line-height: 1.75;
+}
+
+/* Loading indicator for HTMX */
+.htmx-request .htmx-indicator {
+    display: inline-block;
+}
+
+.htmx-indicator {
+    display: none;
+}
+
+/* Tab Styling */
+.tab-button {
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.tab-button.active {
+    color: #4f46e5;
+    border-color: #4f46e5;
+}
+
+.tab-button:not(.active) {
+    color: #6b7280;
+    border-color: transparent;
+}
+
+.tab-button:not(.active):hover {
+    color: #374151;
+    border-color: #d1d5db;
+}
+
+.tab-content {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Card height consistency */
+.grid > div {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Ensure all cards have same height */
+@media (min-width: 768px) {
+    .grid > div {
+        min-height: 400px;
+    }
+}
+
+/* Card Layout Improvements */
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.5;
+    min-height: 4.5em;
+}
+
+/* Ensure consistent card heights */
+.grid > div {
+    height: 100%;
+}

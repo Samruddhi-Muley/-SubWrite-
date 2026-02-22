@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Password Reset - SubWrite{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <div class="bg-white rounded-lg shadow-md p-12 text-center">
+        <div class="mb-6">
+            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span class="text-4xl">✅</span>
+            </div>
+        </div>
+
+        <h1 class="text-3xl font-bold text-gray-900 mb-4">Password Reset Successful!</h1>
+
+        <p class="text-lg text-gray-600 mb-8">Your password has been updated successfully. You can now login with your new password.</p>
+
+        <a href="/login" class="bg-indigo-600 text-white px-8 py-3 rounded-lg hover:bg-indigo-700 font-semibold inline-block">
+            Login Now
+        </a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Browse Tags - SubWrite{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto">
+    <div class="mb-8">
+        <h1 class="text-4xl font-bold text-gray-900 mb-2">Browse by Tag</h1>
+        <p class="text-gray-600">Explore articles by topic</p>
+    </div>
+
+    {% if tags %}
+        <div class="bg-white rounded-lg shadow-md p-8">
+            <div class="flex flex-wrap gap-3">
+                {% for tag, count in tags %}
+                <a href="/tag/{{ tag }}"
+                   class="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full font-semibold hover:bg-indigo-200 transition">
+                    #{{ tag }}
+                    <span class="text-indigo-600 ml-1">({{ count }})</span>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <div class="bg-white rounded-lg shadow-md p-12 text-center">
+            <p class="text-gray-500 text-lg">No tags yet. Start writing articles with tags!</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% block title %}{{ profile_user.username }}'s Profile - SubWrite{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto">
+    <!-- Profile Header -->
+    <div class="bg-white rounded-lg shadow-md p-8 mb-8">
+        <div class="flex items-start space-x-6">
+            <!-- Profile Image -->
+            <div class="flex-shrink-0">
+                {% if profile_user.profile_image %}
+                    <img src="{{ profile_user.profile_image }}"
+                         alt="{{ profile_user.username }}"
+                         class="w-32 h-32 rounded-full object-cover border-4 border-indigo-500">
+                {% else %}
+                    <div class="w-32 h-32 rounded-full bg-indigo-600 flex items-center justify-center text-white text-4xl font-bold">
+                        {{ profile_user.username[0].upper() }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Profile Info -->
+            <div class="flex-1">
+    <div class="flex items-center justify-between mb-2">
+        <h1 class="text-3xl font-bold text-gray-900">{{ profile_user.full_name or profile_user.username }}</h1>
+
+        {% if current_user and current_user.id == profile_user.id %}
+            <!-- Own profile - show edit button -->
+            <a href="/settings" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 text-sm font-semibold">
+                Edit Profile
+            </a>
+        {% elif current_user %}
+            <!-- Someone else's profile - show follow button -->
+            <form action="/follow/{{ profile_user.username }}" method="POST">
+                {% if is_following %}
+                    <button type="submit" class="bg-gray-700 text-white px-6 py-2 rounded-lg hover:bg-gray-800 text-sm font-semibold">
+                        ✓ Following
+                    </button>
+                {% else %}
+                    <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 text-sm font-semibold">
+                        + Follow
+                    </button>
+                {% endif %}
+            </form>
+        {% else %}
+            <!-- Not logged in - show login prompt -->
+            <a href="/login" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 text-sm font-semibold">
+                Follow
+            </a>
+        {% endif %}
+    </div>
+
+    <!-- Follower/Following count -->
+    <div class="flex items-center space-x-4 mb-4">
+        <span class="text-gray-600">
+            <strong>{{ followers_count }}</strong> {% if followers_count == 1 %}follower{% else %}followers{% endif %}
+        </span>
+        <span class="text-gray-600">
+            <strong>{{ following_count }}</strong> following
+        </span>
+    </div>
+
+                <div class="flex items-center mb-2">
+                        <p class="text-gray-600">@{{ profile_user.username }}</p>
+                        {% if profile_user.is_verified %}
+                            <span class="ml-2 bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-semibold" title="Verified account">
+                                ✓ Verified
+                            </span>
+                        {% endif %}
+                </div>
+
+                {% if profile_user.is_writer %}
+                    <span class="inline-block bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-semibold mb-4">
+                        ✍️ Writer
+                    </span>
+                {% endif %}
+
+                {% if profile_user.bio %}
+                    <p class="text-gray-700 mb-4 text-lg">{{ profile_user.bio }}</p>
+                {% endif %}
+
+                <!-- Social Links -->
+                <div class="flex space-x-4">
+                    {% if profile_user.website_url %}
+                        <a href="{{ profile_user.website_url }}" target="_blank"
+                           class="text-gray-600 hover:text-indigo-600">
+                            🌐 Website
+                        </a>
+                    {% endif %}
+                    {% if profile_user.twitter_url %}
+                        <a href="{{ profile_user.twitter_url }}" target="_blank"
+                           class="text-gray-600 hover:text-indigo-600">
+                            🐦 Twitter
+                        </a>
+                    {% endif %}
+                    {% if profile_user.github_url %}
+                        <a href="{{ profile_user.github_url }}" target="_blank"
+                           class="text-gray-600 hover:text-indigo-600">
+                            💻 GitHub
+                        </a>
+                    {% endif %}
+                </div>
+
+                <div class="mt-4 text-sm text-gray-500">
+                    Member since {{ profile_user.created_at.strftime('%B %Y') }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Articles Section -->
+    <div class="mb-4">
+        <h2 class="text-2xl font-bold text-gray-900">
+            {% if current_user and current_user.id == profile_user.id %}
+                My Articles
+            {% else %}
+                Articles by {{ profile_user.username }}
+            {% endif %}
+            <span class="text-gray-500 text-lg">({{ articles|length }})</span>
+        </h2>
+    </div>
+
+    <!-- Articles Grid -->
+    {% if articles %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for article in articles %}
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">{{ article.title }}</h3>
+                    {% if article.subtitle %}
+                    <p class="text-gray-600 mb-4">{{ article.subtitle }}</p>
+                    {% endif %}
+                    <p class="text-gray-700 mb-4 line-clamp-3">{{ article.content.replace('#', '').replace('*', '').replace('`', '')[:100] }}...</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-500">{{ article.created_at.strftime('%B %d, %Y') }}</span>
+                        <a href="/article/{{ article.id }}" class="text-indigo-600 hover:text-indigo-800 font-semibold">
+                            Read More →
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="bg-white rounded-lg shadow-md p-12 text-center">
+            <p class="text-gray-500 text-lg">
+                {% if current_user and current_user.id == profile_user.id %}
+                    You haven't published any articles yet.
+                    <a href="/write" class="text-indigo-600 hover:text-indigo-800 font-semibold">Write your first article!</a>
+                {% else %}
+                    No published articles yet.
+                {% endif %}
+            </p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
