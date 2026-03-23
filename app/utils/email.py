@@ -5,16 +5,24 @@ from typing import List
 import os
 from dotenv import load_dotenv
 
-# Load environment variables
-load_dotenv()
+# Load .env file only if it exists (for local development)
+if os.path.exists(".env"):
+    load_dotenv()
 
 # Email Configuration
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
 SENDER_EMAIL = os.getenv("SENDER_EMAIL", "your-email@gmail.com")
 SENDER_PASSWORD = os.getenv("SENDER_PASSWORD", "your-app-password")
+# Base URL (works locally and in production)
+BASE_URL = os.getenv("BASE_URL", "http://localhost:8000")
 SENDER_NAME = "SubWrite"
 
+# Validate environment variables
+if not SENDER_EMAIL or not SENDER_PASSWORD:
+    raise ValueError(
+        "Missing email credentials. Please set SENDER_EMAIL and SENDER_PASSWORD."
+    )
 
 def send_email(to_email: str, subject: str, html_content: str, text_content: str = None):
     """
@@ -85,14 +93,14 @@ def send_welcome_email(to_email: str, username: str):
                     <li>Use markdown to format your posts beautifully</li>
                 </ul>
 
-                <a href="http://localhost:8000/dashboard" class="button">Go to Dashboard</a>
+                <a href="{BASE_URL}/dashboard" class="button">Go to Dashboard</a>
 
                 <p style="margin-top: 30px;">Happy writing! ✍️</p>
                 <p>The SubWrite Team</p>
             </div>
             <div class="footer">
                 <p>This email was sent to {to_email}</p>
-                <p>© 2024 SubWrite. All rights reserved.</p>
+                <p>© 2026 SubWrite. All rights reserved.</p>
             </div>
         </div>
     </body>
@@ -112,7 +120,7 @@ def send_welcome_email(to_email: str, username: str):
     - Explore articles from other writers
     - Use markdown to format your posts beautifully
 
-    Visit: http://localhost:8000/dashboard
+    Visit: {BASE_URL}/dashboard
 
     Happy writing!
     The SubWrite Team
@@ -127,7 +135,7 @@ def send_verification_email(to_email: str, username: str, verification_token: st
     """
     subject = "Verify Your Email - SubWrite"
 
-    verification_link = f"http://localhost:8000/verify-email?token={verification_token}"
+    verification_link = f"{BASE_URL}/verify-email?token={verification_token}"
 
     html_content = f"""
     <!DOCTYPE html>
@@ -168,7 +176,7 @@ def send_verification_email(to_email: str, username: str, verification_token: st
             </div>
             <div class="footer">
                 <p>This email was sent to {to_email}</p>
-                <p>© 2024 SubWrite. All rights reserved.</p>
+                <p>© 2026 SubWrite. All rights reserved.</p>
             </div>
         </div>
     </body>
@@ -200,7 +208,7 @@ def send_password_reset_email(to_email: str, username: str, reset_token: str):
     """
     subject = "Reset Your Password - SubWrite"
 
-    reset_link = f"http://localhost:8000/reset-password?token={reset_token}"
+    reset_link = f"{BASE_URL}/reset-password?token={reset_token}"
 
     html_content = f"""
     <!DOCTYPE html>
@@ -241,7 +249,7 @@ def send_password_reset_email(to_email: str, username: str, reset_token: str):
             </div>
             <div class="footer">
                 <p>This email was sent to {to_email}</p>
-                <p>© 2024 SubWrite. All rights reserved.</p>
+                <p>© 2026 SubWrite. All rights reserved.</p>
             </div>
         </div>
     </body>
